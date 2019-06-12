@@ -49,7 +49,7 @@ CharacterStats.prototype.takeDamage = function(){
   * should inherit takeDamage() from CharacterStats
 */
 function Humanoid(attributesHuman) {
-  GameObject.call(this, attributesHuman);
+  //GameObject.call(this, attributesHuman);
   CharacterStats.call(this,attributesHuman);
   this.team = attributesHuman.team;
   this.weapons = attributesHuman.weapons;
@@ -62,6 +62,19 @@ Humanoid.prototype.greet = function(){
   return `${this.name} Greetings in ${this.language}`;
 }
 
+// * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function. 
+function Hero(attributesHero){
+  //GameObject.call(this,attributesHero);
+  //CharacterStats.call(this,attributesHero);
+  Humanoid.call(this,attributesHero);
+  this.skill = attributesHero.skill;
+}
+Hero.prototype = Object.create(GameObject.prototype);
+Hero.prototype = Object.create(CharacterStats.prototype);
+Hero.prototype = Object.create(Humanoid.prototype);
+Hero.prototype.levelUp = function(){
+  return `Congrats ${this.name}, your level went up!`; 
+}
  
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -122,6 +135,28 @@ Humanoid.prototype.greet = function(){
     language: 'Elvish',
   });
 
+  const bilguun = new Hero({
+    createdAt: new Date(),
+    dimensions:{
+      length: 4,
+      widht: 4,
+      height: 5,
+    },
+    healthPoints: 460,
+    name: 'Bilguun',
+    team: 'Kingdom of Nomads',
+    weapons: [
+      'sword',
+      'stones',
+    ],
+    language: 'Mongolian',
+    skills: [
+      'riding horse',
+      'making fire',
+      'making friends',
+    ],
+  });
+
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
@@ -132,7 +167,7 @@ Humanoid.prototype.greet = function(){
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-
+  console.log(bilguun.levelUp());
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
